@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petit mot pour mon ti cœur</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Georgia", serif;
+    }body {
+  min-height: 100vh;
+  background: url('background.png') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
+
+h1 {
+  color: #fff;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  font-size: 2rem;
+}
+
+.parchment {
+  background: #f4e4bc;
+  border: 8px solid #c9a86a;
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  position: relative;
+}
+
+.parchment::before,
+.parchment::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+}
+
+.parchment::before {
+  top: 10px;
+  left: 10px;
+}
+
+.parchment::after {
+  bottom: 10px;
+  right: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #8b6f47;
+  border-radius: 12px;
+  font-size: 1rem;
+  text-align: center;
+  background: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+}
+
+.heart-btn {
+  background: #d6336c;
+  color: white;
+  border: none;
+  width: 70px;
+  height: 70px;
+  font-size: 2rem;
+  cursor: pointer;
+  transform: rotate(-45deg);
+  border-radius: 15px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.heart-btn::before,
+.heart-btn::after {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: #d6336c;
+  border-radius: 50%;
+}
+
+.heart-btn::before {
+  top: -35px;
+  left: 0;
+}
+
+.heart-btn::after {
+  left: 35px;
+  top: 0;
+}
+
+.heart-btn span {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  transform: rotate(45deg);
+  font-size: 1.5rem;
+  margin-top: 8px;
+}
+
+.heart-btn:hover {
+  transform: rotate(-45deg) scale(1.08);
+}
+
+#result {
+  margin-top: 30px;
+  min-height: 150px;
+  color: #3d2b1f;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.result-img {
+  max-width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+iframe {
+  width: 100%;
+  max-width: 560px;
+  height: 315px;
+  border: none;
+  border-radius: 14px;
+  margin-top: 10px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Petit mot pour mon ti cœur</h1><div class="parchment">
+  <input
+    type="text"
+    id="codeInput"
+    placeholder="Entre ton code secret..."
+  />
+
+  <button class="heart-btn" onclick="checkCode()">
+    <span>❤</span>
+  </button>
+
+  <div id="result"></div>
+</div>
+
+  </div>  <script>
+    const result = document.getElementById("result");
+
+    function typeWriter(text, speed = 45) {
+      result.innerHTML = "";
+      let i = 0;
+
+      function write() {
+        if (i < text.length) {
+          result.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(write, speed);
+        }
+      }
+
+      write();
+    }
+
+    function checkCode() {
+      const code = document.getElementById("codeInput").value.trim().toLowerCase();
+
+      if (code === "belle") {
+        result.innerHTML = `
+          <h2>Carte Lorcana - Belle Étrange</h2>
+          <br>
+          <img src="lorcana-belle-etrange.jpg" alt="Carte Lorcana Belle" class="result-img">
+        `;
+      }
+
+      else if (code === "sexylove") {
+        result.innerHTML = `
+          <h2>Ne-Yo - Sexy Love</h2>
+          <iframe
+            src="https://www.youtube.com/embed/mgaeGW-2z6w"
+            allowfullscreen>
+          </iframe>
+        `;
+      }
+
+      else if (code === "moncoeur") {
+        typeWriter(
+          "Chaque jour avec toi ressemble à une page de plus dans la plus belle des histoires. Merci d'être toi, merci d'être là. Tu es mon plus beau hasard et mon plus doux refuge. ❤"
+        );
+      }
+
+      else {
+        result.innerHTML = "<p>Code inconnu... mais mon cœur reste ouvert pour toi ❤</p>";
+      }
+    }
+  </script></body>
+</html>
