@@ -171,6 +171,46 @@ button:hover {
   background: #a8885c;
   transform: scale(1.08);
 }
+
+/* 🃏 bouton carte */
+.card-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.mini-card {
+  width: 80px;
+  height: 110px;
+  background: linear-gradient(135deg, #f8e8c9, #e8cfa3);
+  border-radius: 12px;
+  border: 3px solid #c9a86a;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  position: relative;
+}
+
+/* effet hover */
+.mini-card:hover {
+  transform: scale(1.08) rotate(2deg);
+}
+
+/* petit cœur au centre */
+.mini-heart {
+  font-size: 1.8rem;
+  color: #d6336c;
+  animation: pulseHeart 1.5s infinite;
+}
+
+@keyframes pulseHeart {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
     
   </style>
 </head>
@@ -186,9 +226,11 @@ button:hover {
     placeholder="Entre ton code secret..."
   />
 
-  <button class="heart-btn" onclick="checkCode()">
-    <span>❤</span>
-  </button>
+  <div class="card-btn" onclick="checkCode()">
+  <div class="mini-card">
+    <div class="mini-heart">❤</div>
+  </div>
+</div>
 
   <div id="result"></div>
 </div>
@@ -271,34 +313,61 @@ answers:[
 ]
 },
 {
-question:"3. Ton pouvoir 💫",
+question:"3. Ton regard 💫",
 answers:[
-{text:"Courage",house:"gryffondor"},
-{text:"Ambition",house:"serpentard"},
-{text:"Intelligence",house:"serdaigle"},
-{text:"Douceur",house:"poufsouffle"}
+{text:"Déterminé",house:"gryffondor"},
+{text:"Intense",house:"serpentard"},
+{text:"Curieux",house:"serdaigle"},
+{text:"Doux",house:"poufsouffle"}
 ]
 },
 {
-question:"4. Pour moi tu es...",
+question:"4. Notre relation 💖",
+answers:[
+{text:"Passionnée",house:"gryffondor"},
+{text:"Addictive",house:"serpentard"},
+{text:"Unique",house:"serdaigle"},
+{text:"Apaisante",house:"poufsouffle"}
+]
+},
+{
+question:"5. Ce que tu es pour moi 🥺",
 answers:[
 {text:"Ma force",house:"gryffondor"},
 {text:"Mon désir",house:"serpentard"},
 {text:"Ma lumière",house:"serdaigle"},
-{text:"Mon amour",house:"poufsouffle"}
+{text:"Mon refuge",house:"poufsouffle"}
 ]
 },
 {
-question:"5. Notre futur 💍",
+question:"6. Si je devais te décrire...",
 answers:[
-{text:"Aventureux",house:"gryffondor"},
-{text:"Passionné",house:"serpentard"},
-{text:"Profond",house:"serdaigle"},
-{text:"Doux",house:"poufsouffle"}
+{text:"Incroyable",house:"gryffondor"},
+{text:"Irrésistible",house:"serpentard"},
+{text:"Brillante",house:"serdaigle"},
+{text:"Adorable",house:"poufsouffle"}
+]
+},
+{
+question:"7. Notre futur 💍",
+answers:[
+{text:"Rempli d'aventures",house:"gryffondor"},
+{text:"Intense et passionné",house:"serpentard"},
+{text:"Profond et sincère",house:"serdaigle"},
+{text:"Doux et heureux",house:"poufsouffle"}
+]
+},
+{
+question:"8. Ce que je ressens pour toi ❤",
+answers:[
+{text:"Un amour fort",house:"gryffondor"},
+{text:"Une attirance folle",house:"serpentard"},
+{text:"Une connexion unique",house:"serdaigle"},
+{text:"Un amour pur",house:"poufsouffle"}
 ]
 }
 ];
-
+    
 function startQuiz(){
   score = { gryffondor:0, serpentard:0, serdaigle:0, poufsouffle:0 };
   qIndex = 0;
@@ -328,10 +397,18 @@ function showResult(){
   let house = Object.keys(score).reduce((a,b)=> score[a]>score[b]?a:b);
 
   let msg="";
-  if(house==="gryffondor") msg="Gryffondor 🦁\n\nTu es mon courage, ma force… et mon plus bel amour ❤";
-  if(house==="serpentard") msg="Serpentard 🐍\n\nTu es irrésistible… et complètement à moi 😏❤";
-  if(house==="serdaigle") msg="Serdaigle 🦅\n\nTon esprit me fait tomber amoureux chaque jour ❤";
-  if(house==="poufsouffle") msg="Poufsouffle 🦡\n\nTu es mon refuge… mon cœur est chez toi ❤";
+
+  if(house==="gryffondor")
+    msg="Gryffondor 🦁\n\nTu es passionnée, courageuse… et tu fais battre mon cœur plus fort chaque jour. Je suis fier de t’aimer ❤";
+
+  if(house==="serpentard")
+    msg="Serpentard 🐍\n\nTu es magnétique… irrésistible… et complètement addictive. Je suis à toi 😏❤";
+
+  if(house==="serdaigle")
+    msg="Serdaigle 🦅\n\nTon esprit me fascine… ton regard me perd… je tombe amoureux encore et encore ❤";
+
+  if(house==="poufsouffle")
+    msg="Poufsouffle 🦡\n\nTu es douceur, chaleur… avec toi je suis chez moi. Tu es tout ❤";
 
   typeWriter("Le Choixpeau a parlé...\n\n" + msg,35);
 }
