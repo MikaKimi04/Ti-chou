@@ -9,7 +9,8 @@
       padding: 0;
       box-sizing: border-box;
       font-family: "Georgia", serif;
-    }body {
+    }
+    body {
   min-height: 100vh;
   background: url('Background.jpg') center/cover no-repeat;
   display: flex;
@@ -141,8 +142,41 @@ iframe {
   margin-top: 10px;
 }
 
+    .magic {
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.glow {
+  text-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+}
+
+button {
+  margin: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  background: #8b6f47;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #a8885c;
+  transform: scale(1.08);
+}
+    
   </style>
 </head>
+  <audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 <body>
   <div class="container">
     <h1>Petit mot pour mon ti cœur</h1><div class="parchment">
@@ -188,6 +222,10 @@ iframe {
         `;
       }
 
+else if (code === "poudlard") {
+  startQuiz();
+}
+        
       else if (code === "sexylove") {
         result.innerHTML = `
           <h2>Ne-Yo - Sexy Love</h2>
@@ -208,5 +246,131 @@ iframe {
         result.innerHTML = "<p>Code inconnu... mais mon cœur reste ouvert pour toi ❤</p>";
       }
     }
+
+let score = {
+  gryffondor: 0,
+  serpentard: 0,
+  serdaigle: 0,
+  poufsouffle: 0
+};
+
+let questionIndex = 0;
+
+const questions = [
+  {
+    question: "1. Ce qui te définit le mieux ❤️",
+    answers: [
+      { text: "Je protège ceux que j'aime", house: "gryffondor" },
+      { text: "Je sais ce que je veux et je l'obtiens", house: "serpentard" },
+      { text: "J'aime comprendre le monde", house: "serdaigle" },
+      { text: "Je suis toujours là pour les autres", house: "poufsouffle" }
+    ]
+  },
+  {
+    question: "2. Dans notre histoire...",
+    answers: [
+      { text: "Tu es mon aventure", house: "gryffondor" },
+      { text: "Tu es mon évidence", house: "serdaigle" },
+      { text: "Tu es mon désir", house: "serpentard" },
+      { text: "Tu es mon cocon", house: "poufsouffle" }
+    ]
+  },
+  {
+    question: "3. Ton plus grand pouvoir 💫",
+    answers: [
+      { text: "Ton courage", house: "gryffondor" },
+      { text: "Ta détermination", house: "serpentard" },
+      { text: "Ton esprit", house: "serdaigle" },
+      { text: "Ton cœur", house: "poufsouffle" }
+    ]
+  },
+  {
+    question: "4. Ce que tu es pour moi 🥺",
+    answers: [
+      { text: "Ma force", house: "gryffondor" },
+      { text: "Ma tentation", house: "serpentard" },
+      { text: "Ma lumière", house: "serdaigle" },
+      { text: "Mon refuge", house: "poufsouffle" }
+    ]
+  },
+  {
+    question: "5. Notre futur 💍",
+    answers: [
+      { text: "Rempli d'aventures", house: "gryffondor" },
+      { text: "Intense et passionné", house: "serpentard" },
+      { text: "Profond et sincère", house: "serdaigle" },
+      { text: "Doux et heureux", house: "poufsouffle" }
+    ]
+  }
+];
+
+function startQuiz() {
+  document.getElementById("bgMusic").play();
+
+  score = { gryffondor: 0, serpentard: 0, serdaigle: 0, poufsouffle: 0 };
+  questionIndex = 0;
+
+  typeWriter("Le Choixpeau magique s'éveille... 🧙‍♂️✨", 40);
+
+  setTimeout(showQuestion, 2000);
+}
+
+function showQuestion() {
+  const q = questions[questionIndex];
+
+  result.innerHTML = `<h2 class="magic">${q.question}</h2>`;
+
+  q.answers.forEach(answer => {
+    result.innerHTML += `
+      <button onclick="selectAnswer('${answer.house}')">
+        ${answer.text}
+      </button><br>
+    `;
+  });
+}
+
+function selectAnswer(house) {
+  score[house]++;
+  questionIndex++;
+
+  if (questionIndex < questions.length) {
+    showQuestion();
+  } else {
+    revealHouse();
+  }
+}
+
+function revealHouse() {
+  result.innerHTML = "<h2 class='glow'>Hmmmm... intéressant... 🤔</h2>";
+
+  setTimeout(showResult, 2500);
+}
+
+function showResult() {
+  let finalHouse = Object.keys(score).reduce((a, b) =>
+    score[a] > score[b] ? a : b
+  );
+
+  let message = "";
+
+  if (finalHouse === "gryffondor") {
+    message = "Gryffondor 🦁\n\nTu es courageuse, intense... et tu fais battre mon cœur plus fort chaque jour. Je suis fier de t'aimer ❤";
+  }
+
+  if (finalHouse === "serpentard") {
+    message = "Serpentard 🐍\n\nTu es magnétique, irrésistible... et je suis totalement à toi. Impossible de te résister 😏❤";
+  }
+
+  if (finalHouse === "serdaigle") {
+    message = "Serdaigle 🦅\n\nTon esprit me fascine, ton regard me captive... je tombe amoureux de toi encore et encore ❤";
+  }
+
+  if (finalHouse === "poufsouffle") {
+    message = "Poufsouffle 🦡\n\nTu es douceur, chaleur... avec toi je suis chez moi. Tu es tout ce dont j’ai besoin ❤";
+  }
+
+  typeWriter("Le Choixpeau a parlé...\n\n" + message, 35);
+}
+    
   </script></body>
 </html>
