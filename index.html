@@ -246,130 +246,94 @@ else if (code === "poudlard") {
         result.innerHTML = "<p>Code inconnu... mais mon cœur reste ouvert pour toi ❤</p>";
       }
     }
+// 🧙‍♂️ QUIZ POUDLARD
 
-let score = {
-  gryffondor: 0,
-  serpentard: 0,
-  serdaigle: 0,
-  poufsouffle: 0
-};
-
-let questionIndex = 0;
+let score = { gryffondor:0, serpentard:0, serdaigle:0, poufsouffle:0 };
+let qIndex = 0;
 
 const questions = [
-  {
-    question: "1. Ce qui te définit le mieux ❤️",
-    answers: [
-      { text: "Je protège ceux que j'aime", house: "gryffondor" },
-      { text: "Je sais ce que je veux et je l'obtiens", house: "serpentard" },
-      { text: "J'aime comprendre le monde", house: "serdaigle" },
-      { text: "Je suis toujours là pour les autres", house: "poufsouffle" }
-    ]
-  },
-  {
-    question: "2. Dans notre histoire...",
-    answers: [
-      { text: "Tu es mon aventure", house: "gryffondor" },
-      { text: "Tu es mon évidence", house: "serdaigle" },
-      { text: "Tu es mon désir", house: "serpentard" },
-      { text: "Tu es mon cocon", house: "poufsouffle" }
-    ]
-  },
-  {
-    question: "3. Ton plus grand pouvoir 💫",
-    answers: [
-      { text: "Ton courage", house: "gryffondor" },
-      { text: "Ta détermination", house: "serpentard" },
-      { text: "Ton esprit", house: "serdaigle" },
-      { text: "Ton cœur", house: "poufsouffle" }
-    ]
-  },
-  {
-    question: "4. Ce que tu es pour moi 🥺",
-    answers: [
-      { text: "Ma force", house: "gryffondor" },
-      { text: "Ma tentation", house: "serpentard" },
-      { text: "Ma lumière", house: "serdaigle" },
-      { text: "Mon refuge", house: "poufsouffle" }
-    ]
-  },
-  {
-    question: "5. Notre futur 💍",
-    answers: [
-      { text: "Rempli d'aventures", house: "gryffondor" },
-      { text: "Intense et passionné", house: "serpentard" },
-      { text: "Profond et sincère", house: "serdaigle" },
-      { text: "Doux et heureux", house: "poufsouffle" }
-    ]
-  }
+{
+question:"1. Ce qui te définit ❤️",
+answers:[
+{text:"Je protège ceux que j'aime",house:"gryffondor"},
+{text:"Je veux toujours plus",house:"serpentard"},
+{text:"Je comprends tout",house:"serdaigle"},
+{text:"Je donne tout mon cœur",house:"poufsouffle"}
+]
+},
+{
+question:"2. Dans notre histoire...",
+answers:[
+{text:"Tu es mon aventure",house:"gryffondor"},
+{text:"Tu es mon obsession",house:"serpentard"},
+{text:"Tu es mon évidence",house:"serdaigle"},
+{text:"Tu es mon refuge",house:"poufsouffle"}
+]
+},
+{
+question:"3. Ton pouvoir 💫",
+answers:[
+{text:"Courage",house:"gryffondor"},
+{text:"Ambition",house:"serpentard"},
+{text:"Intelligence",house:"serdaigle"},
+{text:"Douceur",house:"poufsouffle"}
+]
+},
+{
+question:"4. Pour moi tu es...",
+answers:[
+{text:"Ma force",house:"gryffondor"},
+{text:"Mon désir",house:"serpentard"},
+{text:"Ma lumière",house:"serdaigle"},
+{text:"Mon amour",house:"poufsouffle"}
+]
+},
+{
+question:"5. Notre futur 💍",
+answers:[
+{text:"Aventureux",house:"gryffondor"},
+{text:"Passionné",house:"serpentard"},
+{text:"Profond",house:"serdaigle"},
+{text:"Doux",house:"poufsouffle"}
+]
+}
 ];
 
-function startQuiz() {
-  document.getElementById("bgMusic").play();
-
-  score = { gryffondor: 0, serpentard: 0, serdaigle: 0, poufsouffle: 0 };
-  questionIndex = 0;
-
-  typeWriter("Le Choixpeau magique s'éveille... 🧙‍♂️✨", 40);
-
-  setTimeout(showQuestion, 2000);
+function startQuiz(){
+  score = { gryffondor:0, serpentard:0, serdaigle:0, poufsouffle:0 };
+  qIndex = 0;
+  typeWriter("Le Choixpeau magique s'éveille... 🧙‍♂️✨",40);
+  setTimeout(showQ,2000);
 }
 
-function showQuestion() {
-  const q = questions[questionIndex];
-
-  result.innerHTML = `<h2 class="magic">${q.question}</h2>`;
-
-  q.answers.forEach(answer => {
-    result.innerHTML += `
-      <button onclick="selectAnswer('${answer.house}')">
-        ${answer.text}
-      </button><br>
-    `;
+function showQ(){
+  const q = questions[qIndex];
+  result.innerHTML = `<h2>${q.question}</h2>`;
+  q.answers.forEach(a=>{
+    result.innerHTML += `<button onclick="answer('${a.house}')">${a.text}</button><br><br>`;
   });
 }
 
-function selectAnswer(house) {
-  score[house]++;
-  questionIndex++;
-
-  if (questionIndex < questions.length) {
-    showQuestion();
+function answer(h){
+  score[h]++;
+  qIndex++;
+  if(qIndex < questions.length){
+    showQ();
   } else {
-    revealHouse();
+    showResult();
   }
 }
 
-function revealHouse() {
-  result.innerHTML = "<h2 class='glow'>Hmmmm... intéressant... 🤔</h2>";
+function showResult(){
+  let house = Object.keys(score).reduce((a,b)=> score[a]>score[b]?a:b);
 
-  setTimeout(showResult, 2500);
-}
+  let msg="";
+  if(house==="gryffondor") msg="Gryffondor 🦁\n\nTu es mon courage, ma force… et mon plus bel amour ❤";
+  if(house==="serpentard") msg="Serpentard 🐍\n\nTu es irrésistible… et complètement à moi 😏❤";
+  if(house==="serdaigle") msg="Serdaigle 🦅\n\nTon esprit me fait tomber amoureux chaque jour ❤";
+  if(house==="poufsouffle") msg="Poufsouffle 🦡\n\nTu es mon refuge… mon cœur est chez toi ❤";
 
-function showResult() {
-  let finalHouse = Object.keys(score).reduce((a, b) =>
-    score[a] > score[b] ? a : b
-  );
-
-  let message = "";
-
-  if (finalHouse === "gryffondor") {
-    message = "Gryffondor 🦁\n\nTu es courageuse, intense... et tu fais battre mon cœur plus fort chaque jour. Je suis fier de t'aimer ❤";
-  }
-
-  if (finalHouse === "serpentard") {
-    message = "Serpentard 🐍\n\nTu es magnétique, irrésistible... et je suis totalement à toi. Impossible de te résister 😏❤";
-  }
-
-  if (finalHouse === "serdaigle") {
-    message = "Serdaigle 🦅\n\nTon esprit me fascine, ton regard me captive... je tombe amoureux de toi encore et encore ❤";
-  }
-
-  if (finalHouse === "poufsouffle") {
-    message = "Poufsouffle 🦡\n\nTu es douceur, chaleur... avec toi je suis chez moi. Tu es tout ce dont j’ai besoin ❤";
-  }
-
-  typeWriter("Le Choixpeau a parlé...\n\n" + message, 35);
+  typeWriter("Le Choixpeau a parlé...\n\n" + msg,35);
 }
     
   </script></body>
