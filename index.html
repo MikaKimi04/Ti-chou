@@ -338,6 +338,25 @@ else if (code === "poudlard") {
         `;
       }
 
+else if (code === "jack01") {
+  result.innerHTML = `
+    <h2>Une surprise pour toi ❤️</h2>
+
+    <blockquote class="instagram-media" 
+      data-instgrm-permalink="https://www.instagram.com/julieventurelli/reel/DXcHeetiA8P/" 
+      data-instgrm-version="14"
+      style="background:#FFF; border:0; margin: 20px auto; max-width:540px; width:100%;">
+    </blockquote>
+  `;
+
+  // recharge l'embed Instagram
+  setTimeout(() => {
+    if (window.instgrm) {
+      window.instgrm.Embeds.process();
+    }
+  }, 500);
+}
+        
       else if (code === "moncoeur") {
         typeWriter(
           "Chaque jour avec toi ressemble à une page de plus dans la plus belle des histoires. Merci d'être toi, merci d'être là. Tu es mon plus beau hasard et mon plus doux refuge. ❤"
@@ -473,5 +492,9 @@ function showResult(){
   typeWriter("Le Choixpeau a parlé...\n\n" + msg,35);
 }
     
-  </script></body>
+  </script>
+
+  <script async src="//www.instagram.com/embed.js"></script>
+
+</body>
 </html>
