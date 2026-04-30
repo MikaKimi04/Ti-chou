@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game ❤️</title>
+
+<style>
+body {
+  margin:0;
+  font-family: Georgia, serif;
+  background: url('Background.jpg') center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:white;
+  text-align:center;
+}
+
+.overlay {
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.6);
+}
+
+.game {
+  position:relative;
+  z-index:1;
+  max-width:600px;
+}
+
+input {
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  margin-top:15px;
+  text-align:center;
+}
+
+button {
+  margin-top:15px;
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  background:#d6336c;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover {
+  transform:scale(1.05);
+}
+
+.fade {
+  animation: fade 1s ease;
+}
+
+@keyframes fade {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="game" id="game"></div>
+
+<script>
+let step = 0;
+
+function nextStep() {
+  step++;
+  render();
+}
+
+function render() {
+  const g = document.getElementById("game");
+
+  // ÉTAPE 0
+  if(step === 0){
+    g.innerHTML = `
+      <div class="fade">
+        <h2>🔐 Une épreuve t'attend...</h2>
+        <p>Si tu veux découvrir ce qui se cache derrière mon cœur...</p>
+        <button onclick="nextStep()">Commencer</button>
+      </div>
+    `;
+  }
+
+  // ÉTAPE 1
+  if(step === 1){
+    g.innerHTML = `
+      <div class="fade">
+        <h2>🧩 Énigme</h2>
+        <p>Je bats sans jamais m’arrêter,<br>je parle sans dire un mot...<br>Qui suis-je ?</p>
+        <input id="r1" placeholder="Ta réponse...">
+        <br>
+        <button onclick="check1()">Valider</button>
+      </div>
+    `;
+  }
+
+  // ÉTAPE 2
+  if(step === 2){
+    g.innerHTML = `
+      <div class="fade">
+        <h2>📅 Souvenir</h2>
+        <p>Entre la date qui compte le plus pour nous 💖</p>
+        <input id="r2" placeholder="ex: 07042007">
+        <br>
+        <button onclick="check2()">Valider</button>
+      </div>
+    `;
+  }
+
+  // ÉTAPE 3
+  if(step === 3){
+    g.innerHTML = `
+      <div class="fade">
+        <h2>💭 Choix</h2>
+        <p>Ce que je suis pour toi ?</p>
+        <button onclick="choice(false)">Un hasard</button><br>
+        <button onclick="choice(false)">Une aventure</button><br>
+        <button onclick="choice(true)">Ton évidence</button>
+      </div>
+    `;
+  }
+
+  // ÉTAPE 4 FINAL
+  if(step === 4){
+    g.innerHTML = `
+      <div class="fade">
+        <h2>❤️ Tu as réussi...</h2>
+        <p>
+        Tu as traversé chaque épreuve...<br><br>
+        Et la vérité est simple :<br><br>
+        <strong>Je t’aime plus que tout.</strong><br><br>
+        Tu es mon évidence, mon refuge, mon bonheur. ❤️
+        </p>
+      </div>
+    `;
+  }
+}
+
+// CHECKS
+
+function check1(){
+  const r = document.getElementById("r1").value.toLowerCase();
+  if(r.includes("coeur") || r.includes("cœur")){
+    nextStep();
+  } else {
+    alert("Indice : il bat pour toi ❤️");
+  }
+}
+
+function check2(){
+  const r = document.getElementById("r2").value;
+  
+  // 👉 CHANGE ICI TA DATE
+  if(r === "01012023"){
+    nextStep();
+  } else {
+    alert("Indice : une date importante pour nous 💭");
+  }
+}
+
+function choice(correct){
+  if(correct){
+    nextStep();
+  } else {
+    alert("Hmm... réfléchis encore ❤️");
+  }
+}
+
+// start
+render();
+</script>
+
+</body>
+</html>
